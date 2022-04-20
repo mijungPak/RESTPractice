@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<h1>住所検索</h1>
+<p>郵便番号を元に住所を検索します。</p>
+<form action="">
+	<p>郵便番号：
+		<input type="text" name="zipcode" th:value="${param.zipcode}">
+		<input type="submit" value="検索">
+	</p>
+</form>
+
+<!-- 検索結果 -->
+<th:block th:if="${info}">
+	<th:block  th:if="${info.results}">
+		<p class="address" th:each="result : ${info.results}">
+			<ruby>
+				<rb>[[${result.address1}]]</rb>
+				<rt>[[${result.kana1}]]</rt>
+				<rb>[[${result.address2}]]</rb>
+				<rt>[[${result.kana2}]]</rt>
+				<rb>[[${result.address3}]]</rb>
+				<rt>[[${result.kana3}]]</rt>
+			</ruby>
+		</p>
+	</th:block>
+	<p th:unless="${info.results}">該当する住所が見つかりませんでした。</p>
+</th:block>
+
+<h1>天気予報</h1>
+<form action="">
+	<select name="areaId">
+		<option value="016010">札幌</option>
+		<option value="040010">仙台</option>
+		<option value="130010">東京</option>
+		<option value="270000">大阪</option>
+		<option value="400010">福岡</option>
+		<option value="471010">那覇</option>
+	</select>
+	<input type="submit" value="天気を見る">
+</form>
+
+<th:block th:if="${weather}">
+<h2 th:text="${weather.title}"></h2>
+<table border="1">
+	<tr th:each="f : ${weather.forecasts}">
+		<th th:text="${f.date}"></th>
+		<td style="text-align: center;">
+			<img th:src="@{${f.image.url}}"><br>
+			[[${f.telop}]]
+		</td>
+	</tr>
+</table>
+</th:block>
+
+</body>
+</html>

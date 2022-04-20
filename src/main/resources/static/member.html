@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+<h1>会員</h1>
+<table border="1">
+	<thead>
+	<tr>
+		<th>ID</th>
+		<th>氏名</th>
+		<th>住所</th>
+		<th>年齢</th>
+	</tr>
+	</thead>
+	<tbody id="tbody">
+	</tbody>
+</table>
+
+<script>
+const endpoint = "http://localhost:8080/members";
+
+const getAll = async () => {
+	const res = await fetch(endpoint)
+	const data = await res.json()
+	console.log(data)
+	const tbody = document.getElementById('tbody')
+	for(datum of data) {
+		const tr = document.createElement('tr')
+		const td1 = document.createElement('td')
+		const td2 = document.createElement('td')
+		const td3 = document.createElement('td')
+		const td4 = document.createElement('td')
+		td1.innerText = datum.id
+		td2.innerText = datum.name
+		td3.innerText = datum.address
+		td4.innerText = datum.age
+
+		tr.appendChild(td1)
+		tr.appendChild(td2)
+		tr.appendChild(td3)
+		tr.appendChild(td4)
+
+		tbody.appendChild(tr)
+	}
+}
+
+getAll()
+</script>
+
+</body>
+</html>
